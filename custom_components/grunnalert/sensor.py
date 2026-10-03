@@ -142,6 +142,11 @@ class ConnectionSensor(GrunnAlertEntity, SensorEntity):
         super().__init__(coordinator, "connection")
 
     @property
+    def available(self) -> bool:
+        # Ook als een vangnet-fetch mislukt willen we zien of live nog werkt.
+        return True
+
+    @property
     def native_value(self) -> str:
         return "live" if self.coordinator.live_connected else "polling"
 

@@ -7,7 +7,7 @@ from typing import Final
 
 DOMAIN: Final = "grunnalert"
 NAME: Final = "GrunnAlert"
-VERSION: Final = "1.0.0"
+VERSION: Final = "1.0.1"
 AUTHOR: Final = "StarlightFM"
 
 API_BASE: Final = "https://grunnalert.nl"

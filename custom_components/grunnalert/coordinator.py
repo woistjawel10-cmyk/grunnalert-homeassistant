@@ -188,7 +188,7 @@ class GrunnAlertCoordinator(DataUpdateCoordinator[list[dict[str, Any]]]):
             except (aiohttp.ClientError, asyncio.TimeoutError, OSError) as err:
                 _LOGGER.debug(
                     "Live verbinding met GrunnAlert verbroken: %s",
-                    err or type(err).__name__,
+                    str(err) or type(err).__name__,
                 )
             except Exception:  # noqa: BLE001
                 # Wat er ook misgaat, de live taak mag nooit stoppen.

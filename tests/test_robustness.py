@@ -111,3 +111,17 @@ async def test_failed_poll_while_live_keeps_entities(hass: HomeAssistant, aiocli
     await coordinator.async_refresh()
     assert coordinator.last_update_success
     assert coordinator.data[0]["id"] == "k1"
+
+
+async def test_connection_sensor_stays_available(hass: HomeAssistant, aioclient_mock):
+    entry = await setup_entry(hass, aioclient_mock, [])
+    coordinator = entry.runtime_data
+    aioclient_mock.clear_requests()
+    aioclient_mock.get(ALERTS_URL, status=500)
+    await coordinator.async_refresh()
+    await hass.async_block_till_done()
+    assert not coordinator.last_update_success
+    state = hass.states.get("sensor.grunnalert_provincie_groningen_connection")
+    assert state.state == "polling"
+    latest = hass.states.get("sensor.grunnalert_provincie_groningen_latest_alert")
+    assert latest.state == "unavailable"
