@@ -1,0 +1,100 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "GrunnAlert instellen",
+        "description": "Live P2000-meldingen uit de provincie Groningen, aangeleverd door GrunnAlert (grunnalert.nl). Kies welke meldingen je wilt ontvangen.",
+        "data": {
+          "area": "Gebied",
+          "disciplines": "Diensten"
+        },
+        "data_description": {
+          "area": "De hele provincie Groningen, of alleen de plaatsen die jij kiest.",
+          "disciplines": "Van welke hulpdiensten je meldingen wilt zien."
+        }
+      },
+      "places": {
+        "title": "Plaatsen kiezen",
+        "description": "Kies een of meer plaatsen in de provincie Groningen.",
+        "data": {
+          "places": "Plaatsen"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "GrunnAlert is op dit moment niet bereikbaar. Probeer het straks opnieuw.",
+      "no_disciplines": "Kies minimaal een dienst.",
+      "no_places": "Kies minimaal een plaats.",
+      "too_many_places": "Je kunt maximaal 50 plaatsen kiezen.",
+      "unknown_place": "Deze plaats kent GrunnAlert niet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "GrunnAlert-instellingen",
+        "description": "Meldingen komen live binnen. De verversingstijd is alleen een vangnet als de live verbinding even wegvalt.",
+        "data": {
+          "area": "Gebied",
+          "disciplines": "Diensten",
+          "scan_interval": "Vangnet-verversing",
+          "map_minutes": "Hoe lang op de kaart"
+        },
+        "data_description": {
+          "map_minutes": "Hoeveel minuten een melding als punt op de kaart blijft staan. 0 zet de kaart uit."
+        }
+      },
+      "places": {
+        "title": "Plaatsen kiezen",
+        "description": "Kies een of meer plaatsen in de provincie Groningen.",
+        "data": {
+          "places": "Plaatsen"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "GrunnAlert is op dit moment niet bereikbaar. Probeer het straks opnieuw.",
+      "no_disciplines": "Kies minimaal een dienst.",
+      "no_places": "Kies minimaal een plaats.",
+      "too_many_places": "Je kunt maximaal 50 plaatsen kiezen.",
+      "unknown_place": "Deze plaats kent GrunnAlert niet."
+    }
+  },
+  "selector": {
+    "area": {
+      "options": {
+        "groningen": "Hele provincie Groningen",
+        "places": "Alleen mijn plaatsen"
+      }
+    },
+    "disciplines": {
+      "options": {
+        "fire": "Brandweer",
+        "ambulance": "Ambulance",
+        "police": "Politie",
+        "other": "Overig"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "latest_alert": {
+        "name": "Laatste melding"
+      },
+      "latest_alert_time": {
+        "name": "Tijd laatste melding"
+      },
+      "alerts_last_hour": {
+        "name": "Meldingen afgelopen uur",
+        "unit_of_measurement": "meldingen"
+      },
+      "connection": {
+        "name": "Verbinding",
+        "state": {
+          "live": "Live",
+          "polling": "Vangnet (polling)"
+        }
+      }
+    }
+  }
+}

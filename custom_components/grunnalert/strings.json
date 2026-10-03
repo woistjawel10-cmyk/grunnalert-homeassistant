@@ -1,0 +1,100 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up GrunnAlert",
+        "description": "Live P2000 emergency alerts from the province of Groningen, provided by GrunnAlert (grunnalert.nl). Choose which alerts you want to receive.",
+        "data": {
+          "area": "Area",
+          "disciplines": "Services"
+        },
+        "data_description": {
+          "area": "The whole province of Groningen, or only the places you pick.",
+          "disciplines": "Which emergency services you want alerts from."
+        }
+      },
+      "places": {
+        "title": "Choose places",
+        "description": "Pick one or more places in the province of Groningen.",
+        "data": {
+          "places": "Places"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "GrunnAlert cannot be reached right now. Please try again later.",
+      "no_disciplines": "Pick at least one service.",
+      "no_places": "Pick at least one place.",
+      "too_many_places": "You can pick at most 50 places.",
+      "unknown_place": "GrunnAlert does not know this place."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "GrunnAlert settings",
+        "description": "Alerts arrive live. The refresh interval is only a fallback for when the live connection drops.",
+        "data": {
+          "area": "Area",
+          "disciplines": "Services",
+          "scan_interval": "Fallback refresh",
+          "map_minutes": "Time on map"
+        },
+        "data_description": {
+          "map_minutes": "How many minutes an alert stays on the map. 0 turns the map off."
+        }
+      },
+      "places": {
+        "title": "Choose places",
+        "description": "Pick one or more places in the province of Groningen.",
+        "data": {
+          "places": "Places"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "GrunnAlert cannot be reached right now. Please try again later.",
+      "no_disciplines": "Pick at least one service.",
+      "no_places": "Pick at least one place.",
+      "too_many_places": "You can pick at most 50 places.",
+      "unknown_place": "GrunnAlert does not know this place."
+    }
+  },
+  "selector": {
+    "area": {
+      "options": {
+        "groningen": "Whole province of Groningen",
+        "places": "Only my places"
+      }
+    },
+    "disciplines": {
+      "options": {
+        "fire": "Fire brigade",
+        "ambulance": "Ambulance",
+        "police": "Police",
+        "other": "Other"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "latest_alert": {
+        "name": "Latest alert"
+      },
+      "latest_alert_time": {
+        "name": "Latest alert time"
+      },
+      "alerts_last_hour": {
+        "name": "Alerts last hour",
+        "unit_of_measurement": "alerts"
+      },
+      "connection": {
+        "name": "Connection",
+        "state": {
+          "live": "Live",
+          "polling": "Fallback (polling)"
+        }
+      }
+    }
+  }
+}

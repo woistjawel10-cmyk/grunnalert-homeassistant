@@ -1,0 +1,95 @@
+blueprint:
+  name: GrunnAlert melding naar je telefoon
+  description: >
+    Stuurt een melding naar je telefoon zodra GrunnAlert een nieuwe
+    P2000-melding uit de provincie Groningen binnenkrijgt.
+    Optioneel alleen voor bepaalde plaatsen, diensten of prio 1.
+    Meldingen via GrunnAlert (https://grunnalert.nl).
+  domain: automation
+  source_url: https://github.com/woistjawel10-cmyk/grunnalert-homeassistant/blob/main/blueprints/automation/grunnalert/grunnalert_melding.yaml
+  author: StarlightFM
+  input:
+    notify_device:
+      name: Telefoon
+      description: De telefoon met de Home Assistant-app die de melding krijgt.
+      selector:
+        device:
+          filter:
+            integration: mobile_app
+    grunnalert_entry:
+      name: GrunnAlert-integratie (optioneel)
+      description: >
+        Heb je GrunnAlert vaker toegevoegd, bijvoorbeeld voor je dorp en voor
+        de hele provincie? Kies dan hier welke je wilt gebruiken, anders krijg
+        je sommige meldingen dubbel. Leeg laten als je er maar een hebt.
+      default: ""
+      selector:
+        config_entry:
+          integration: grunnalert
+    places:
+      name: Alleen deze plaatsen (optioneel)
+      description: Laat leeg voor alle plaatsen uit je GrunnAlert-instellingen. Eén plaats per regel.
+      default: []
+      selector:
+        text:
+          multiple: true
+    disciplines:
+      name: Diensten
+      description: >
+        Let op: veel brandmeldingen staan bij GrunnAlert nog als "Overig".
+        Laat Overig daarom aan staan als je brandweermeldingen wilt.
+      default: [fire, ambulance, police, other]
+      selector:
+        select:
+          multiple: true
+          options:
+            - label: Brandweer
+              value: fire
+            - label: Ambulance
+              value: ambulance
+            - label: Politie
+              value: police
+            - label: Overig
+              value: other
+    only_priority_1:
+      name: Alleen prio 1
+      default: false
+      selector:
+        boolean: {}
+
+mode: queued
+max: 10
+
+variables:
+  grunnalert_entry: !input grunnalert_entry
+  places: !input places
+  disciplines: !input disciplines
+  only_priority_1: !input only_priority_1
+
+triggers:
+  - trigger: event
+    event_type: grunnalert_alert
+
+conditions:
+  - condition: template
+    value_template: >
+      {% set city = trigger.event.data.city | lower | trim %}
+      {% set wanted = places | map('trim') | map('lower') | reject('eq', '') | list %}
+      {{ (not grunnalert_entry or trigger.event.data.config_entry_id == grunnalert_entry)
+         and trigger.event.data.discipline in disciplines
+         and (wanted | count == 0 or city in wanted)
+         and (not only_priority_1 or trigger.event.data.priority == 1) }}
+
+actions:
+  - domain: mobile_app
+    type: notify
+    device_id: !input notify_device
+    title: "GrunnAlert: {{ trigger.event.data.discipline_label }}"
+    message: >
+      {{ trigger.event.data.message }}
+      {% if trigger.event.data.location %}({{ trigger.event.data.location }}){% endif %}
+      via GrunnAlert
+    data:
+      url: "{{ trigger.event.data.maps_url or 'https://grunnalert.nl' }}"
+      clickAction: "{{ trigger.event.data.maps_url or 'https://grunnalert.nl' }}"
+      group: grunnalert

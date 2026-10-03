@@ -1,0 +1,13 @@
+{
+  "domain": "grunnalert",
+  "name": "GrunnAlert",
+  "codeowners": ["@woistjawel10-cmyk"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/woistjawel10-cmyk/grunnalert-homeassistant",
+  "integration_type": "service",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/woistjawel10-cmyk/grunnalert-homeassistant/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}
